@@ -29,7 +29,7 @@ class Rule private constructor(
 
         fun setName(name: String?) = apply { this.name = name }
         fun setDescription(description: String?) = apply { this.description = description }
-        fun setConditon(block: (Any) -> Boolean) = apply { this.condition = block}
+        fun setCondition(block: (Any) -> Boolean) = apply { this.condition = block}
         fun setAction(block: () -> Unit) = apply { this.action = block }
         fun build(): Rule {
             return Rule(host, id, name, description, condition, action)
