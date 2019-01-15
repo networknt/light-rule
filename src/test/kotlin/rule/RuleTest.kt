@@ -5,6 +5,31 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
 class RuleTest {
+
+    @Test
+    fun `a simple rule with string fact`() {
+        val fact = "Kotlin"
+
+        val condition1: Predicate<String> = {
+            it.startsWith("Kot")
+        }
+
+        val action1: () -> Unit = {
+            println("Rule 1 is fired")
+        }
+
+        val rule = rule<String>("com.networknt", "rule0001", "1.2.0") {
+            name = "rule 1"
+            description = "This is the first rule for testing"
+            condition = condition1
+            action = action1
+        }
+
+        val result = rule.fire(fact)
+        assertTrue(result)
+        println(result)
+    }
+
     @Test
     fun `a simple rule with one condition and one action`() {
         val rule = rule<User>("com.networknt", "r0001", "1.0.0") {
