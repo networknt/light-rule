@@ -8,15 +8,15 @@ fun main(args: Array<String>) {
 fun test1(): Unit {
     val fact = "Kotlin"
 
-    val condition1: (Any) -> Boolean  = {
-        if(it is String) it.startsWith("Kot") else false
+    val condition1: Predicate<String> = {
+        it.startsWith("Kot")
     }
 
     val action1: () -> Unit = {
         println("Rule 1 is fired")
     }
 
-    val rule = rule("com.networknt", "rule0001", "1.2.0") {
+    val rule = rule<String>("com.networknt", "rule0001", "1.2.0") {
         name = "rule 1"
         description = "This is the first rule for testing"
         condition = condition1
@@ -32,11 +32,11 @@ data class Customer(val firstName: String, val lastName: String)
 fun test2(): Unit {
     val fact = Customer("Steve", "Hu")
 
-    val rule = rule("net.lightapi", "rule0002", "1.0.0") {
+    val rule = rule<Customer>("net.lightapi", "rule0002", "1.0.0") {
         name = "rule 1"
         description = "This is the first rule for testing"
         condition = {
-            if(it is Customer) it.firstName == "Steve" && it.lastName == "Hu" else false
+            it.firstName == "Steve" && it.lastName == "Hu"
         }
         action = {
             println("Rule 2 is fired")

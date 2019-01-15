@@ -74,7 +74,7 @@ class ConditionTest {
     }
 
     @Test
-    fun `user with and or compbined`() {
+    fun `user with or and compbined`() {
         val user1 = User(firstName = "Steve", lastName = "Hu", gender = Gender.MALE, activated = false)
         val user2 = User(firstName = "John", lastName = "Doe", gender = Gender.MALE, activated = true)
 
@@ -90,6 +90,26 @@ class ConditionTest {
                     )
                 )
         assertTrue(rule.invoke(user1))
+        assertTrue(rule.invoke(user2))
+    }
+
+    @Test
+    fun `user with and or compbined`() {
+        val user1 = User(firstName = "Steve", lastName = "Hu", gender = Gender.MALE, activated = false)
+        val user2 = User(firstName = "John", lastName = "Doe", gender = Gender.MALE, activated = true)
+
+        var rule =
+                and (
+                        or (
+                                withFirstName("Steve"),
+                                withLastName("Hu"),
+                                withGender(Gender.MALE)
+                        ),
+                        or (
+                                withActivated(true)
+                        )
+                )
+        assertFalse(rule.invoke(user1))
         assertTrue(rule.invoke(user2))
     }
 

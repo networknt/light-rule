@@ -27,5 +27,8 @@ infix fun <T> Condition<T>.or(other: Condition<T>) : CompondCondition<T> = Compo
 inline fun <reified T> or(vararg conditions: Condition<T>): CompondCondition<T>  = CompondCondition(CompondOperator.OR, conditions.toList())
 
 // And
+infix fun <T> Predicate<T>.and(other: Predicate<T>) : CompondCondition<T> = CompondCondition(CompondOperator.AND, listOf(Condition(this), Condition(other)))
+inline fun <reified T> and(vararg predicates: Predicate<T>): CompondCondition<T>  = CompondCondition(CompondOperator.AND, predicates.toList().map{Condition(it)}.toList())
+
 infix fun <T> Condition<T>.and(other: Condition<T>): CompondCondition<T> = CompondCondition(CompondOperator.AND, listOf(this, other))
 inline fun <reified T> and(vararg conditions: Condition<T>): CompondCondition<T> = CompondCondition(CompondOperator.AND, conditions.toList())
