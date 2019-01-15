@@ -30,49 +30,67 @@ class ConditionTest {
         val p2: Predicate<Customer> = { it.lastName == "Hu"}
         val p: Boolean = p1.invoke(customer) && p2.invoke(customer);
 
-        println(p)
+        println("p = $p")
 
         val anotherCustomer = Customer("John", "Doe")
         val pa = p1.invoke(anotherCustomer) && p2.invoke(anotherCustomer);
 
-        println(pa)
+        println("pa = $pa")
 
         val pb = p1(anotherCustomer) && p2(anotherCustomer)
 
-        println(pb)
+        println("pb = $pb")
 
     }
 
     @Test
     fun `operator or compond`() {
         val customer = Customer("Steve", "Hu")
-        val p1: Predicate<Customer> = { it.firstName == "Steve"}
-        val p2: Predicate<Customer> = { it.lastName == "Doe"}
-        var cs = p1.or(p2)
-        println(cs.evaluate(customer))
+        val c1: Condition<Customer> = Condition{ it.firstName == "Steve"}
+        val c2: Condition<Customer> = Condition{ it.lastName == "Doe"}
+        var cs1 = c1.or(c2)
+        println(cs1.invoke(customer))
 
-        var cs1 = hasLastName("Doe") or hasFirstName("John")
-        println(cs1.evaluate(customer))
-
+        var cs2 = Condition(hasLastName("Doe")) or Condition(hasFirstName("John"))
+        println(cs2.invoke(customer))
     }
 
     @Test
     fun `operator and compond`() {
         val customer = Customer("Steve", "Hu")
-        val p1: Predicate<Customer> = { it.firstName == "Steve"}
-        val p2: Predicate<Customer> = { it.lastName == "Doe"}
-        val p3: Predicate<Customer> = { it.lastName == "Hu"}
-        var cs1 = p1.and(p2)
-        println(cs1.evaluate(customer))
-        var cs2 = p1.and(p3)
-        println(cs2.evaluate(customer))
+        val c1: Condition<Customer> = Condition{ it.firstName == "Steve"}
+        val c2: Condition<Customer> = Condition{ it.lastName == "Doe"}
+        val c3: Condition<Customer> = Condition{ it.lastName == "Hu"}
+        var cs1 = c1.and(c2)
+        assertFalse(cs1.invoke(customer))
+        var cs2 = c1.and(c3)
+        assertTrue(cs2.invoke(customer))
 
-        var cs3 = p1 and p3
-        println(cs3.evaluate(customer))
+        var cs3 = c1 and c3
+        assertTrue(cs3.invoke(customer))
 
-        var cs4 = ( hasLastName("Hu") and hasFirstName("Steve"))
-        println(cs4.evaluate(customer))
+        var cs4 = Condition(hasLastName("Hu")) and Condition(hasFirstName("Steve"))
+        assertTrue(cs4.invoke(customer))
+    }
 
+    @Test
+    fun `user with and or compbined`() {
+        val user1 = User(firstName = "Steve", lastName = "Hu", gender = Gender.MALE, activated = false)
+        val user2 = User(firstName = "John", lastName = "Doe", gender = Gender.MALE, activated = true)
+
+        var rule =
+                or (
+                    and (
+                       withFirstName("Steve"),
+                       withLastName("Hu"),
+                       withGender(Gender.MALE)
+                    ),
+                    and(
+                        withActivated(true)
+                    )
+                )
+        assertTrue(rule.invoke(user1))
+        assertTrue(rule.invoke(user2))
     }
 
 }
