@@ -9,7 +9,7 @@ package rule
  *
  * @author Steve Hu
  */
-class RuleSet<T>(val id: String, val description: String, val rules: List<Rule<T>>) {
+class RuleSet<T>(val setId: String, val description: String, val rules: List<Rule<T>>) {
     /**
      * Fire a set of rules. Return true is at least one rule condition is true.
      */
@@ -24,14 +24,14 @@ class RuleSet<T>(val id: String, val description: String, val rules: List<Rule<T
 }
 
 class RuleSetBuilder<T> {
-    var id: String = ""
+    var setId: String = ""
     var description: String = ""
     var rules = mutableListOf<Rule<T>>()
 
     fun rules(block: RULES<T>.() -> Unit) {
         rules.addAll(RULES<T>().apply(block))
     }
-    fun build(): RuleSet<T> = RuleSet<T>(id, description, rules)
+    fun build(): RuleSet<T> = RuleSet<T>(setId, description, rules)
 }
 
 class RULES<T>: ArrayList<Rule<T>>() {

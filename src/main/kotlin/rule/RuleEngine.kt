@@ -1,0 +1,4 @@
+package rule
+
+interface RuleEngine {
+}

@@ -9,7 +9,7 @@ class RuleSetTest {
     fun `a simple set with two rules`() {
         val user = User(firstName = "Steve", lastName = "Hu", activated = false)
         val s = ruleSet<User> {
-            id = "set001"
+            setId = "set001"
             description = "this is the first set of rules"
             rules {
                 rule("com.networknt", "r0001", "1.0.0") {
