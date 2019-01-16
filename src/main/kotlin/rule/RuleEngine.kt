@@ -40,11 +40,13 @@ interface RuleEngine<T> {
     fun fireRuleSet(setId: String, t: T): Boolean
 
     companion object {
-        protected var INSTANCE: RuleEngine<*>? = null
+        @Volatile private var INSTANCE: RuleEngine<*>? = null
 
         fun <T> getInstance(): RuleEngine<T> {
-            if (null == INSTANCE) {
-                INSTANCE = DefaultRuleEngine<T>()
+            INSTANCE?: synchronized(this) {
+                DefaultRuleEngine<T>().also {
+                    INSTANCE = it
+                }
             }
             return INSTANCE as RuleEngine<T>
         }
