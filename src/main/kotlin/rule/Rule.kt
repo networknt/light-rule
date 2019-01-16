@@ -1,9 +1,9 @@
 package rule
 
 @DslMarker
-annotation class RuleBuilder
+annotation class RuleMarker
 
-class Rule<T> private constructor(
+class Rule<T> constructor(
         val host: String = "com.networknt",
         val id: String = "",
         val version: String = "1.0.0",
@@ -21,7 +21,7 @@ class Rule<T> private constructor(
         return false
     }
 
-    @RuleBuilder
+    @RuleMarker
     class Builder<T>(val host: String, val id: String, val version: String) {
         var name: String? = null
         var description: String? = null
