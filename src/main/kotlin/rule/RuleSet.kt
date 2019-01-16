@@ -35,8 +35,8 @@ class RuleSetBuilder<T> {
 }
 
 class RULES<T>: ArrayList<Rule<T>>() {
-    fun rule(host: String, id: String, version: String, block: Rule.Builder<T>.() -> Unit) {
-        add(Rule.Builder<T>(host, id, version).apply(block).build())
+    fun rule(id: String, block: Rule.Builder<T>.() -> Unit) {
+        add(Rule.Builder<T>(id).apply(block).build())
     }
 }
 

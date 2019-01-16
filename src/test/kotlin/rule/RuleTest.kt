@@ -18,7 +18,7 @@ class RuleTest {
             println("Rule 1 is fired")
         }
 
-        val rule = rule<String>("com.networknt", "rule0001", "1.2.0") {
+        val rule = rule<String>("com.networknt.rule0001-1.0.0") {
             name = "rule 1"
             description = "This is the first rule for testing"
             condition = condition1
@@ -32,7 +32,7 @@ class RuleTest {
 
     @Test
     fun `a simple rule with one condition and one action`() {
-        val rule = rule<User>("com.networknt", "r0001", "1.0.0") {
+        val rule = rule<User>("com.networknt.r0001-1.0.0") {
             name = "rule 0001"
             description = "This is the first rule for testing with one condition and one action"
             condition = {
@@ -50,7 +50,7 @@ class RuleTest {
 
     @Test
     fun `a rule with or conditions`() {
-        val rule = rule<User>("com.networknt", "r0002", "1.0.0") {
+        val rule = rule<User>("com.networknt.r0002-1.0.0") {
             name = "rule 0002"
             description = "This is the rule for testing with multiple conditions compound with or"
             condition = or (
@@ -72,7 +72,7 @@ class RuleTest {
 
     @Test
     fun `a rule with and conditions`() {
-        val rule = rule<User>("com.networknt", "r0003", "1.0.0") {
+        val rule = rule<User>("com.networknt.r0003-1.0.0") {
             name = "rule 0003"
             description = "This is the rule for testing with multiple conditions compound with and"
             condition = and (
@@ -90,5 +90,4 @@ class RuleTest {
         assertFalse(result)
         println(result)
     }
-
 }
