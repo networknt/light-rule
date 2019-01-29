@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.org.fusesource.jansi.AnsiRenderer.test
 plugins {
     application
     kotlin("jvm") version "1.3.10"
+    maven
 }
 
 application {
@@ -15,6 +16,12 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.3.2")
 }
 
-repositories {
-    jcenter()
+allprojects {
+    group = "com.networknt"
+    version = "1.0.0"
+
+    repositories {
+        mavenLocal() // mavenLocal must be added first.
+        jcenter()
+    }
 }
