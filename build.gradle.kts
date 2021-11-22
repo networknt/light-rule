@@ -9,6 +9,10 @@ application {
     mainClassName = "rule.CliKt"
 }
 
+tasks.withType<Test> {
+    useJUnitPlatform()
+}
+
 dependencies {
     compile(kotlin("stdlib"))
     testCompile("org.junit.jupiter:junit-jupiter-api:5.3.2")
